@@ -5,6 +5,7 @@
     xmlns:local="using:UWPSoundBoard"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="using:UWPSoundBoard.Model"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -43,12 +44,25 @@
         <SplitView Name="MainPageSplitView" 
                    DisplayMode="CompactOverlay"
                    CompactPaneLength="45"
-                   OpenPaneLength="175">
+                   OpenPaneLength="175"
+                   Grid.Row="1">
             <SplitView.Pane>
                 <ListView Name="MenuItemsListView" 
                           IsItemClickEnabled="True"
+                          ItemsSource="{x:Bind MenuItems}"
                           ItemClick="MenuItemsListView_ItemClick">
-               
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="data:MenuItem">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{x:Bind IconFile}"
+                               Height="45"
+                               Width="45"/>
+                                <TextBlock Text="{x:Bind Category}"
+                                   FontSize="18"
+                                   Margin="10, 0, 0, 0"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 </ListView>
             </SplitView.Pane>
             <SplitView.Content>
@@ -68,16 +82,17 @@
                               Name="SoundGridView"
                               SelectionMode="None"
                               IsItemClickEnabled="True"
-                              ItemClick="SoundGridView_ItemClick">
+                              ItemClick="SoundGridView_ItemClick"
+                              ItemsSource="{x:Bind Sounds}">
                         <GridView.ItemTemplate>
-                            <DataTemplate>
-                                <Image Name="MyImage" Height="112" Width="101"/>
+                            <DataTemplate x:DataType="data:Sound">
+                                <Image Name="MyImage" Height="112" Width="101"
+                                       Source="{x:Bind ImageFile}"/>
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>
                 </Grid>
             </SplitView.Content>
         </SplitView>
-        
     </Grid>
 </Page>
