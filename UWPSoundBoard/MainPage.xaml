@@ -55,18 +55,20 @@
                         <DataTemplate x:DataType="data:MenuItem">
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="{x:Bind IconFile}"
-                               Height="45"
-                               Width="45"/>
+                                       Height="35"
+                                       Width="35"
+                                       Margin="-10, 10, 0, 10"/>
                                 <TextBlock Text="{x:Bind Category}"
-                                   FontSize="18"
-                                   Margin="10, 0, 0, 0"></TextBlock>
+                                           FontSize="18"
+                                           Margin="10, 0, 0, 0"
+                                           VerticalAlignment="Center"></TextBlock>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
             </SplitView.Pane>
             <SplitView.Content>
-                <Grid>
+                <Grid Margin="20, 20, 0, 0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
@@ -87,7 +89,8 @@
                         <GridView.ItemTemplate>
                             <DataTemplate x:DataType="data:Sound">
                                 <Image Name="MyImage" Height="112" Width="101"
-                                       Source="{x:Bind ImageFile}"/>
+                                       Source="{x:Bind ImageFile}"
+                                       />
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>

@@ -40,6 +40,8 @@ namespace UWPSoundBoard
             MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/cartoon.png", Category = SoundCategory.Cartoons });
             MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/taunt.png", Category = SoundCategory.Taunts });
             MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/warning.png", Category = SoundCategory.Warnings });
+
+            BackButton.Visibility = Visibility.Collapsed;
         }
 
         private void NavButton_Click(object sender, RoutedEventArgs e)
@@ -49,7 +51,10 @@ namespace UWPSoundBoard
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-
+            SoundManager.GetAllSounds(Sounds);
+            MenuItemsListView.SelectedItem = null;
+            BackButton.Visibility = Visibility.Collapsed;
+            CategoryTextBlock.Text = "All Sounds";
         }
 
         private void SearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -64,12 +69,20 @@ namespace UWPSoundBoard
 
         private void MenuItemsListView_ItemClick(object sender, ItemClickEventArgs e)
         {
+            var menuItems = (MenuItem)e.ClickedItem;
 
+            //filtered results by category
+            CategoryTextBlock.Text = menuItems.Category.ToString();
+            SoundManager.GetSoundsByCategory(Sounds, menuItems.Category);
+            BackButton.Visibility = Visibility.Visible;
         }
 
         private void SoundGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
+            var sound = (Sound)e.ClickedItem;
 
+            //base uri gives the root of the project, sound.audiofile specifies the path
+            MyMediaElement.Source = new Uri(this.BaseUri, sound.AudioFile);
         }
     }
 }
