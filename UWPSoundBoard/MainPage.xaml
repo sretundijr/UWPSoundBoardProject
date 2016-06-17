@@ -9,5 +9,75 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <RelativePanel>
+            <Button RelativePanel.AlignLeftWithPanel="True" 
+                    FontFamily="Segoe MDL2 Assets"
+                    Content="&#xE700;"
+                    Click="NavButton_Click"
+                    Name="NavButton"
+                    FontSize="20"
+                    Width="45"
+                    Height="45"/>
+            <Button RelativePanel.RightOf="NavButton"
+                    FontFamily="Segoe MDL2 Assets"
+                    Content="&#xE0A6;"
+                    Name="BackButton"
+                    Click="BackButton_Click"
+                    FontSize="20"
+                    Width="45"
+                    Height="45"/>
+            <AutoSuggestBox RelativePanel.AlignRightWithPanel="True" 
+                            Name="SearchBox"
+                            TextChanged="SearchBox_TextChanged"
+                            QuerySubmitted="SearchBox_QuerySubmitted"
+                            PlaceholderText="Search for sounds"
+                            Width="200"
+                            QueryIcon="Find"/>
+        </RelativePanel>
+
+        <SplitView Name="MainPageSplitView" 
+                   DisplayMode="CompactOverlay"
+                   CompactPaneLength="45"
+                   OpenPaneLength="175">
+            <SplitView.Pane>
+                <ListView Name="MenuItemsListView" 
+                          IsItemClickEnabled="True"
+                          ItemClick="MenuItemsListView_ItemClick">
+               
+                </ListView>
+            </SplitView.Pane>
+            <SplitView.Content>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <MediaElement Name="MyMediaElement" AutoPlay="True"/>
+
+                    <TextBlock Name="CategoryTextBlock" 
+                               Text="All Sounds" 
+                               FontSize="24"/>
+
+                    <GridView Grid.Row="1" 
+                              Name="SoundGridView"
+                              SelectionMode="None"
+                              IsItemClickEnabled="True"
+                              ItemClick="SoundGridView_ItemClick">
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Image Name="MyImage" Height="112" Width="101"/>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </Grid>
+            </SplitView.Content>
+        </SplitView>
+        
     </Grid>
 </Page>
