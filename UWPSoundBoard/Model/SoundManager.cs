@@ -21,15 +21,19 @@ namespace UWPSoundBoard.Model
 
         public static void GetSoundsByName(ObservableCollection<Sound> sounds, string name)
         {
-            var allSounds = getSounds();
-            //eliminates the case issue when searching
-            StringBuilder sb = new StringBuilder(name);
-            sb[0] = char.ToUpper(sb[0]);
-            name = sb.ToString();
+            if (!String.IsNullOrEmpty(name))
+            {
+                var allSounds = getSounds();
+                //eliminates the case issue when searching
+                StringBuilder sb = new StringBuilder(name);
+                sb[0] = char.ToUpper(sb[0]);
+                name = sb.ToString();
 
-            var filteredSounds = allSounds.Where(p => p.Name == name).ToList();
-            sounds.Clear();
-            filteredSounds.ForEach(p => sounds.Add(p));
+                var filteredSounds = allSounds.Where(p => p.Name == name).ToList();
+                sounds.Clear();
+                filteredSounds.ForEach(p => sounds.Add(p));
+            }
+           
         }
 
         public static void GetSoundsByCategory(ObservableCollection<Sound> sounds, SoundCategory soundCategory)

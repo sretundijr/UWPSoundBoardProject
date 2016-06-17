@@ -54,27 +54,40 @@ namespace UWPSoundBoard
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            SoundManager.GetAllSounds(Sounds);
-            MenuItemsListView.SelectedItem = null;
-            BackButton.Visibility = Visibility.Collapsed;
-            CategoryTextBlock.Text = "All Sounds";
+            GoBack();
         }
 
         //this code populates the suggestions drop down in the search box
         private void SearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
-            SoundManager.GetAllSounds(Sounds);
 
-            //eliminates the case issue when searching
-            if(!String.IsNullOrEmpty(sender.Text))
+            if (String.IsNullOrEmpty(sender.Text)) GoBack();
+            else
             {
+                SoundManager.GetAllSounds(Sounds);
+
+                //eliminates the case issue when searching
                 StringBuilder sb = new StringBuilder(sender.Text.ToString());
                 sb[0] = char.ToUpper(sb[0]);
                 sender.Text = sb.ToString();
+
+
+                Suggestions = Sounds.Where(p => p.Name.StartsWith(sender.Text))
+                    .Select(p => p.Name)
+                    .ToList();
+                SearchBox.ItemsSource = Suggestions;
             }
-           
-            Suggestions = Sounds.Where(p => p.Name.StartsWith(sender.Text)).Select(p => p.Name).ToList();
-            SearchBox.ItemsSource = Suggestions;
+
+            
+        }
+
+        private void GoBack()
+        {
+            SoundManager.GetAllSounds(Sounds);
+            MenuItemsListView.SelectedItem = null;
+            BackButton.Visibility = Visibility.Collapsed;
+            CategoryTextBlock.Text = "All Sounds";
+            SearchBox.Text = string.Empty;
         }
 
         private void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
