@@ -5,8 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UWPSoundBoard.Model;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -83,6 +85,44 @@ namespace UWPSoundBoard
 
             //base uri gives the root of the project, sound.audiofile specifies the path
             MyMediaElement.Source = new Uri(this.BaseUri, sound.AudioFile);
+        }
+
+        //adds the drop feature over the grid to allow the user to drag and drop an audio file
+        private async void SoundGridView_Drop(object sender, DragEventArgs e)
+        {
+            if(e.DataView.Contains(StandardDataFormats.StorageItems))
+            {
+                var items = await e.DataView.GetStorageItemsAsync();
+
+                if(items.Any())
+                {
+                    var storageFile = items[0] as StorageFile;
+                    var contentType = storageFile.ContentType;
+
+                    StorageFolder folder = ApplicationData.Current.LocalFolder;
+
+                    if(contentType == "audio/wav" || contentType == "audio/mgeg")
+                    {
+                        StorageFile newFile = await storageFile.CopyAsync(folder, 
+                            storageFile.Name, NameCollisionOption.GenerateUniqueName);
+
+                        MyMediaElement.SetSource(await storageFile.OpenAsync(FileAccessMode.Read), contentType);
+                        MyMediaElement.Play();
+                    }
+
+                }
+            }
+        }
+
+        //shows a caption when the item dragged is over the grid
+        private void SoundGridView_DragOver(object sender, DragEventArgs e)
+        {
+            e.AcceptedOperation = DataPackageOperation.Copy;
+
+            e.DragUIOverride.Caption = "drop to create a custom sound and tile";
+            e.DragUIOverride.IsCaptionVisible = true;
+            e.DragUIOverride.IsContentVisible = true;
+            e.DragUIOverride.IsGlyphVisible = true;
         }
     }
 }
