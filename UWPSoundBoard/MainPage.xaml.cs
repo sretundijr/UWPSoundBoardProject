@@ -61,7 +61,10 @@ namespace UWPSoundBoard
         private void SearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
 
-            if (String.IsNullOrEmpty(sender.Text)) GoBack();
+            if (String.IsNullOrEmpty(sender.Text))
+            {
+                GoBack();
+            }             
             else
             {
                 SoundManager.GetAllSounds(Sounds);
@@ -70,7 +73,6 @@ namespace UWPSoundBoard
                 StringBuilder sb = new StringBuilder(sender.Text.ToString());
                 sb[0] = char.ToUpper(sb[0]);
                 sender.Text = sb.ToString();
-
 
                 Suggestions = Sounds.Where(p => p.Name.StartsWith(sender.Text))
                     .Select(p => p.Name)
