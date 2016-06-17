@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
 using UWPSoundBoard.Model;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
@@ -28,7 +29,7 @@ namespace UWPSoundBoard
     public sealed partial class MainPage : Page
     {
         private ObservableCollection<Sound> Sounds;
-
+        private List<string> Suggestions;
         private List<MenuItem> MenuItems;
 
         public MainPage()
@@ -59,14 +60,29 @@ namespace UWPSoundBoard
             CategoryTextBlock.Text = "All Sounds";
         }
 
+        //this code populates the suggestions drop down in the search box
         private void SearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
+            SoundManager.GetAllSounds(Sounds);
 
+            //eliminates the case issue when searching
+            if(!String.IsNullOrEmpty(sender.Text))
+            {
+                StringBuilder sb = new StringBuilder(sender.Text.ToString());
+                sb[0] = char.ToUpper(sb[0]);
+                sender.Text = sb.ToString();
+            }
+           
+            Suggestions = Sounds.Where(p => p.Name.StartsWith(sender.Text)).Select(p => p.Name).ToList();
+            SearchBox.ItemsSource = Suggestions;
         }
 
         private void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-
+            SoundManager.GetSoundsByName(Sounds, sender.Text);
+            MenuItemsListView.SelectedItem = null;
+            BackButton.Visibility = Visibility.Visible;
+            CategoryTextBlock.Text = sender.Text;
         }
 
         private void MenuItemsListView_ItemClick(object sender, ItemClickEventArgs e)
