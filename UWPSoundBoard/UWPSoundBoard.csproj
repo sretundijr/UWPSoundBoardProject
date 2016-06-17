@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{fd85ef51-8340-469d-a243-63e06bc35efc}</ProjectGuid>
+    <ProjectGuid>{FD85EF51-8340-469D-A243-63E06BC35EFC}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UWPSoundBoard</RootNamespace>
@@ -16,9 +16,7 @@
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    
     <PackageCertificateKeyFile>UWPSoundBoard_TemporaryKey.pfx</PackageCertificateKeyFile>
-    
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -106,11 +104,29 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    
     <None Include="UWPSoundBoard_TemporaryKey.pfx" />
-    
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Audio\Animals\Cat.wav" />
+    <Content Include="Assets\Audio\Animals\Cow.wav" />
+    <Content Include="Assets\Audio\Cartoons\Gun.wav" />
+    <Content Include="Assets\Audio\Cartoons\Spring.wav" />
+    <Content Include="Assets\Audio\Icons\animals.png" />
+    <Content Include="Assets\Audio\Icons\cartoon.png" />
+    <Content Include="Assets\Audio\Icons\taunt.png" />
+    <Content Include="Assets\Audio\Icons\warning.png" />
+    <Content Include="Assets\Audio\Images\Animals\Cat.png" />
+    <Content Include="Assets\Audio\Images\Animals\Cow.png" />
+    <Content Include="Assets\Audio\Images\Cartoons\Gun.png" />
+    <Content Include="Assets\Audio\Images\Cartoons\Spring.png" />
+    <Content Include="Assets\Audio\Images\Taunts\Clock.png" />
+    <Content Include="Assets\Audio\Images\Taunts\LOL.png" />
+    <Content Include="Assets\Audio\Images\Warnings\Ship.png" />
+    <Content Include="Assets\Audio\Images\Warnings\Siren.png" />
+    <Content Include="Assets\Audio\Taunts\Clock.wav" />
+    <Content Include="Assets\Audio\Taunts\LOL.wav" />
+    <Content Include="Assets\Audio\Warnings\Ship.wav" />
+    <Content Include="Assets\Audio\Warnings\Siren.wav" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -130,11 +146,10 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
-
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
